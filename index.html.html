@@ -1,0 +1,151 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brain Boost Quest</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #9face6);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .game-box {
+            background: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #6c63ff;
+            color: white;
+        }
+
+        button:hover {
+            background: #554fd8;
+        }
+
+        .score {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game-box">
+        <h1>🧠 Brain Boost Quest</h1>
+        <p class="question" id="question">Question will appear here</p>
+
+        <button onclick="checkAnswer(0)" id="btn0"></button>
+        <button onclick="checkAnswer(1)" id="btn1"></button>
+        <button onclick="checkAnswer(2)" id="btn2"></button>
+        <button onclick="checkAnswer(3)" id="btn3"></button>
+
+        <p class="result" id="result"></p>
+        <p class="score">Score: <span id="score">0</span></p>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of Nepal?",
+                options: ["Pokhara", "Kathmandu", "Lalitpur", "Biratnagar"],
+                answer: 1
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Earth", "Mars", "Jupiter", "Venus"],
+                answer: 1
+            },
+            {
+                question: "5 + 7 = ?",
+                options: ["10", "11", "12", "13"],
+                answer: 2
+            },
+            {
+                question: "HTML is used to?",
+                options: [
+                    "Style a webpage",
+                    "Add logic to website",
+                    "Structure a webpage",
+                    "Store data"
+                ],
+                answer: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById("question").innerText = q.question;
+            document.getElementById("btn0").innerText = q.options[0];
+            document.getElementById("btn1").innerText = q.options[1];
+            document.getElementById("btn2").innerText = q.options[2];
+            document.getElementById("btn3").innerText = q.options[3];
+            document.getElementById("result").innerText = "";
+        }
+
+        function checkAnswer(selected) {
+            if (selected === questions[currentQuestion].answer) {
+                score++;
+                document.getElementById("result").innerText = "✅ Correct!";
+            } else {
+                document.getElementById("result").innerText = "❌ Wrong!";
+            }
+
+            document.getElementById("score").innerText = score;
+
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                setTimeout(loadQuestion, 800);
+            } else {
+                document.getElementById("question").innerText = "🎉 Game Over!";
+                document.getElementById("result").innerText =
+                    "Your final score is " + score;
+            }
+        }
+
+        loadQuestion();
+    </script>
+
+</body>
+</html>
